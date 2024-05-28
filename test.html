@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Response</title>
+</head>
+<body>
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="uploadImage()">Upload Image</button>
+
+    <div id="response"></div>
+
+    <script>
+        function uploadImage() {
+            var fileInput = document.getElementById('imageInput');
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(event) {
+                var base64Image = event.target.result;
+
+                fetch('http://127.0.0.1:5001/detect_number_plate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        image: base64Image,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    var responseDiv = document.getElementById('response');
+                    responseDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            };
+
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
