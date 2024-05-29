@@ -21,7 +21,7 @@ net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 
 # Your Azure Computer Vision endpoint and key
 endpoint = 'https://ocr-anpr.cognitiveservices.azure.com/'
-key = #your-api-key-here
+key = '96566ed7a377482e8d6b1b41da264537'
 
 # Confidence threshold for OCR
 confidence_threshold = 0.4
